@@ -158,8 +158,8 @@
 
     if (isset($edit_id) && !empty($edit_id)) {
       $edit_id = mysqli_real_escape_string($dbconnection, $_POST['id']);
-
-      if (empty($nameErr) && empty($emailErr) && empty($qualificationErr) && empty($genderErr) && empty($fileErr))  {
+      
+      if ($nameerrorflag === 0 && $emailerrorflag === 0 && $qualifyerrorflag ===0 && $gendererrorflag ===0 && $fileerrorflag ===0)  {
         try {
           $updatesql = "UPDATE studentsinfo SET name=?, email=?, qualification=?, gender=?, filename=? where srno = ?";
           $stmt = mysqli_prepare($dbconnection, $updatesql);
@@ -183,7 +183,7 @@
         }
       }
     } else {
-      if (empty($nameErr) && empty($emailErr) && empty($qualificationErr) && empty($genderErr) && empty($fileErr))  {
+      if ($nameerrorflag === 0 && $emailerrorflag === 0 && $qualifyerrorflag ===0 && $gendererrorflag ===0 && $fileerrorflag ===0 )  {
         try {
           $sql = 'INSERT INTO studentsinfo (name, email, qualification, gender, filename) VALUES (?, ?, ?, ?, ?)';
           $stmt = mysqli_prepare($dbconnection, $sql);
