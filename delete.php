@@ -1,4 +1,4 @@
-<?php include('databaseconnection.php') ?>
+<?php require_once('databaseconnection.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,15 +8,13 @@
     <title>Document</title>
     <script>
         function confirmDelete() {
-            return confirm("Do you want to delete this record?");
+          return confirm("Do you want to delete this record?");
         }
     </script>
 </head>
 
 <body>
-
     <?php
-
     $id = $_GET['id'];
     if (isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
         try {

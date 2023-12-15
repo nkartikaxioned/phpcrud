@@ -1,4 +1,4 @@
-<?php include('databaseconnection.php') ?>
+<?php require_once('databaseconnection.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,9 +17,7 @@
     if (!$stmt) {
       throw new Exception("Error in query: " . mysqli_error($dbconnection));
     }
-
     $total = mysqli_num_rows($stmt);
-
     if ($total != 0) {
   ?>
       <section class="display-section">
@@ -33,20 +31,18 @@
             <th>File Name</th>
             <th>Edit/Delete</th>
           </tr>
-
         <?php
         while ($result = mysqli_fetch_assoc($stmt)) {
-
           echo "
-                <tr>
-                    <td>" . $result['name'] . "</td>
-                    <td>" . $result['email'] . "</td>
-                    <td>" . $result['qualification'] . "</td>
-                    <td>" . $result['gender'] . "</td>
-                    <td>" . $result['filename'] . "</td>
-                    <td><a href='index.php?userid={$result['srno']}'>Edit</a> | <a href='delete.php?id={$result['srno']}'>Delete</a></td>
-                </tr>
-                ";
+          <tr>
+              <td>" . $result['name'] . "</td>
+              <td>" . $result['email'] . "</td>
+              <td>" . $result['qualification'] . "</td>
+              <td>" . $result['gender'] . "</td>
+              <td>" . $result['filename'] . "</td>
+              <td><a href='index.php?userid={$result['srno']}'>Edit</a> | <a href='delete.php?id={$res['srno']}'>Delete</a></td>
+           </tr>
+          ";
         }
       } else {
         echo "No records found";
@@ -59,7 +55,7 @@
     echo "Error: " . $e->getMessage();
   } finally {
     mysqli_close($dbconnection);
-}
+  }
     ?>
 </body>
 

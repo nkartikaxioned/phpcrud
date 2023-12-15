@@ -1,4 +1,4 @@
-<?php include("databaseconnection.php"); ?>
+<?php require_once("databaseconnection.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,18 +10,14 @@
 
 <body>
   <?php
-
   $nameErr = $emailErr = $qualificationErr = $genderErr = $fileErr = "";
   $name = $email = $qualification = $gender = $filename = "";
   $errorMsg = "";
   $edit_id = $errorflag = 0;
-
   if (isset($_GET['userid'])) {
     $edit_id = $_GET['userid'];
-
     $editsql = "SELECT * FROM studentsinfo WHERE srno = $edit_id";
     $editstmt = mysqli_query($dbconnection, $editsql);
-
     try {
       if (!$editstmt) {
         throw new Exception("Error Fetching Data" . mysqli_error($dbconnection));
@@ -56,7 +52,6 @@
     $stmt->store_result();
     $stmt->close();
     $count = $stmt->num_rows;
-
     return $count > 0;
   }
 
@@ -119,7 +114,7 @@
 
   function validateFile($filename, $fileSize)
   {
-    // var_dump($filename, $fileSize);
+    // var_dump($filename);
     global $fileerrorflag;
     if (empty($filename)) {
       $fileerrorflag = 1;
@@ -141,7 +136,6 @@
     $qualification = $_POST['education'];
     $gender = isset($_POST['gender']) ? $_POST['gender'] : '';
     $fileErr = '';
-
     $nameErr = validateName($name);
     $emailErr = validateEmail($dbconnection, $email);
     $qualificationErr = validateQualification($qualification);
@@ -158,8 +152,7 @@
 
     if (isset($edit_id) && !empty($edit_id)) {
       $edit_id = mysqli_real_escape_string($dbconnection, $_POST['id']);
-      
-      if ($nameerrorflag === 0 && $emailerrorflag === 0 && $qualifyerrorflag ===0 && $gendererrorflag ===0 && $fileerrorflag ===0)  {
+      if ($nameerrorflag === 0 && $emailerrorflag === 0 && $qualifyerrorflag === 0 && $gendererrorflag === 0 && $fileerrorflag === 0) {
         try {
           $updatesql = "UPDATE studentsinfo SET name=?, email=?, qualification=?, gender=?, filename=? where srno = ?";
           $stmt = mysqli_prepare($dbconnection, $updatesql);
@@ -171,7 +164,6 @@
           $result = mysqli_stmt_execute($stmt);
           if ($result) {
             echo "<h2>Data Updated Successfully</h2>";
-
             header("Location: viewpage.php");
             exit();
           } else {
@@ -183,7 +175,7 @@
         }
       }
     } else {
-      if ($nameerrorflag === 0 && $emailerrorflag === 0 && $qualifyerrorflag ===0 && $gendererrorflag ===0 && $fileerrorflag ===0 )  {
+      if ($nameerrorflag === 0 && $emailerrorflag === 0 && $qualifyerrorflag === 0 && $gendererrorflag === 0 && $fileerrorflag === 0) {
         try {
           $sql = 'INSERT INTO studentsinfo (name, email, qualification, gender, filename) VALUES (?, ?, ?, ?, ?)';
           $stmt = mysqli_prepare($dbconnection, $sql);
@@ -191,13 +183,10 @@
           if (!$stmt) {
             throw new Exception("Error in prepared statement: " . mysqli_error($dbconnection));
           }
-
           mysqli_stmt_bind_param($stmt, 'sssss', $name, $email, $qualification, $gender, $filename);
-
           if (!mysqli_stmt_execute($stmt)) {
             throw new Exception("Could not save data: " . mysqli_stmt_error($stmt));
           }
-
           $errorMsg = "Data inserted successfully!";
           mysqli_stmt_close($stmt);
           header("Location: viewpage.php");
@@ -208,9 +197,7 @@
       }
     }
   }
-
   ?>
-
   <section class="form-section">
     <h2>Enter Student Detail :</h2>
     <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
