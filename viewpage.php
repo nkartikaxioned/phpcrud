@@ -1,7 +1,3 @@
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-?>
 <?php include('databaseconnection.php') ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +44,7 @@ ini_set('display_errors', 1);
                     <td>" . $result['qualification'] . "</td>
                     <td>" . $result['gender'] . "</td>
                     <td>" . $result['filename'] . "</td>
-                    <td><a href='edit.php?id={$result['srno']}'>Edit</a> | <a href='delete.php?id={$result['srno']}'>Delete</a></td>
+                    <td><a href='index.php?userid={$result['srno']}'>Edit</a> | <a href='delete.php?id={$result['srno']}'>Delete</a></td>
                 </tr>
                 ";
         }
