@@ -62,7 +62,7 @@
 
   function validateName($name)
   {
-    global $errorflag;
+    global $nameerrorflag;
     $name = validateInput($_POST['fname']);
     if (empty($name)) {
       $nameerrorflag = 1;
